@@ -1,4 +1,5 @@
-import {View, Text, StyleSheet, Platform, Image} from 'react-native';
+import {View, Text, StyleSheet, Platform, Image, Modal, Button} from 'react-native';
+import { useState } from "react";
 
 export default function FoodCard({
     name,
@@ -8,6 +9,8 @@ export default function FoodCard({
     difficultyOfPreparation,
     mainIngredients
 }) {
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
     return (
         <View style={styles.card}>
             <View style={styles.nameContainer}>
@@ -17,14 +20,26 @@ export default function FoodCard({
 
             <Image source={image} style={styles.image} resizeMode='contain' />
 
-            <View style={styles.placeContainer}>
-                <Text style={styles.placeOfOrigin}>Porijeklo jela: {placeOfOrigin}</Text>
-                <Text style={styles.difficultyOfPreparation}>Težina pripreme:</Text><Text style={{ fontWeight: "bold", fontSize: 15 }}>{difficultyOfPreparation}</Text>
-            </View>
+            <Button title="Detalji..." color="tan" onPress={() => setIsModalVisible(true)}/>
+            <Modal 
+                visible={isModalVisible} 
+                onRequestClose={() => setIsModalVisible(false)}
+                animationType="slide"
+                presentationStyle="formSheet"
+            >
+                <View style={styles.moreInfoWindow}>
+                <Text style={styles.name}>{name}</Text>
+                    <View style={styles.placeContainer}>
+                        <Text style={styles.placeOfOrigin}>Porijeklo jela: {placeOfOrigin}</Text>
+                        <Text style={styles.difficultyOfPreparation}>Težina pripreme: {difficultyOfPreparation}</Text>
+                    </View>
 
-            <View style={styles.ingerdientsContainer}>
-                <Text style={styles.mainIngredients}>Glavni sastojci: {mainIngredients.join(", ")}</Text>
-            </View>
+                    <View style={styles.ingerdientsContainer}>
+                        <Text style={styles.mainIngredients}>Glavni sastojci: {mainIngredients.join(", ")}</Text>
+                    </View>
+                    <Button title="Zatvori" color="black" onPress={() => setIsModalVisible(false)}/>
+                </View>
+            </Modal>
         </View>
     );
 };
@@ -61,6 +76,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 30,
         fontWeight: 'bold',
+        alignSelf: 'center'
     },
     preparationTime: {
         alignContent: 'center',
@@ -79,22 +95,41 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
     },
+    moreInfoWindow: {
+        flex: 1, 
+        backgroundColor: "tan", 
+        padding: 30,
+    },
     placeContainer: {
-        marginBottom: 10,
+        // marginBottom: 10,
+        // alignContent: 'center'
+        alignContent: 'center',
+        fontSize: 22,
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        borderRadius: 20,
+        borderWidth: 3,
+        borderBottomWidth: 6,
+        borderColor: "#585858",
+        marginTop: 40,
+        marginBottom: 20,
     },
     placeOfOrigin: {
-        fontSize: 20,
-        marginRight: 12,
+        fontSize: 18,
     },
     difficultyOfPreparation: {
-        fontSize: 15,
-        flexWrap: 'nowrap',
+        fontSize: 18,
     },
     ingerdientsContainer: {
         marginBottom: 16,
+        padding: 10,
+        borderWidth: 3,
+        borderBottomWidth: 6,
+        borderColor: "#585858",
+        borderRadius: 20,
     },
     mainIngredients: {
-        fontSize: 17,
-        fontWeight: "bold",
-    },
+        fontSize: 18,
+        fontWeight: "400",
+    }
 })

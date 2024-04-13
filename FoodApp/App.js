@@ -16,9 +16,9 @@ export default function App() {
     name: "Pizza ",
     image: require("./assets/pizza.jpeg"),
     placeOfOrigin: "Italija",
-    preparationTime: "15 minuta",
+    preparationTime: "35 minuta",
     difficultyOfPreparation: "srednje teške",
-    mainIngredients: ["Špagete (no. 13)", "maslinovo ulje", "češnjak", "chili papričice", "peršin"],
+    mainIngredients: ["Tjesto za pizzu", "mortadela", "pesto genovese s pistacijama", "masline", "mozzarella", "bosiljak"],
   };
 
   const beefsteakData = {
@@ -27,7 +27,7 @@ export default function App() {
     placeOfOrigin: "Argentina",
     preparationTime: "5-15 minuta",
     difficultyOfPreparation: "jednostavno",
-    mainIngredients: ["Špagete (no. 13)", "maslinovo ulje", "češnjak", "chili papričice", "peršin"],
+    mainIngredients: ["Goveđi ili juneći odrezak", "maslac", "začini po želji", "ružmarin"],
   };
 
   return (
