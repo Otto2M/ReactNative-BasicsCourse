@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, Switch } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, Switch, Button, Modal, Pressable } from 'react-native';
 import { useState } from "react";
+import LoginForm from "./components/LoginForm";
 
 export default function App() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isDarkMode, setDarkMode] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <TextInput style={styles.input} value={name} onChangeText={setName} placeholder='email@example.com'/>
@@ -32,7 +34,23 @@ export default function App() {
         trackColor={{false: "#767577", true: "plum"}}
         thumbColor="#f4f3f4"/>
       </View>
-      
+
+      <View style={styles.loginFormButton}>
+        <Pressable style={styles.loginButton} onPress={() => setIsModalVisible(true)}>
+          <Text style={styles.textLoginButton}>PRIJAVI SE</Text>
+        </Pressable>
+      </View>
+
+      <Modal 
+          visible={isModalVisible} 
+          onRequestClose={() => setIsModalVisible(false)}
+          animationType="slide"
+          presentationStyle="formSheet"
+        >
+          <LoginForm></LoginForm> 
+
+      </Modal>
+
     </SafeAreaView>
   );
 }
@@ -62,5 +80,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
+  },
+  loginButton: {
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: "#722F37",
+    borderWidth: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    backgroundColor: "white",
+    elevation: 4,
+  },
+  textLoginButton: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: '#722F37',
+    lineHeight: 21,
+  },
+  loginFormButton: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingTop: 40,
   }
 });
