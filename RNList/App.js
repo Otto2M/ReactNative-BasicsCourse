@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, ScrollView, StatusBar, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, StatusBar, SafeAreaView, FlatList, SectionList } from 'react-native';
 import foodList from "./foodData.json";
+import groupedFoodList from "./grouped-data.json";
 
 export default function App() {
   return (
@@ -18,7 +19,7 @@ export default function App() {
       }
       </ScrollView> */}
       <View style={styles.scrollView}>
-      <FlatList 
+      {/* <FlatList 
         data={foodList}
         renderItem={({item}) => {
           return (
@@ -30,7 +31,28 @@ export default function App() {
           );
         }}
         keyExtractor={(item) => item.foodName.toString()}
-      />
+        ItemSeparatorComponent={<View style={{ height: 16 }}/>}
+        ListEmptyComponent={<Text style={styles.noItemsFound} >Nema pronađenih stavki</Text>}
+        ListHeaderComponent={<Text style={styles.headerText}>McDonald's popis hrane</Text>}
+        ListFooterComponent={<Text style={styles.footerText}>Kraj popisa</Text>}
+      /> */}
+      <SectionList 
+      sections={groupedFoodList}
+      renderItem={( {item} ) => {
+        return (
+          <View style={styles.card}>
+            <Text style={styles.cardText}>{item}</Text>
+          </View>
+        )
+      }}
+      renderSectionHeader={( {section}) => (
+        <Text style={styles.sectionHeaderText}>{section.foodType}</Text>
+      )}
+      ItemSeparatorComponent={() => <View style={{ height: 16 }}/>}
+      SectionSeparatorComponent={() => <View style={{ height: 16 }}/>}
+      >
+
+      </SectionList>
       </View>
     </SafeAreaView>
   );
@@ -51,9 +73,29 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "tan",
-    marginBottom: 16,
+    // marginBottom: 16,
   },
   cardText: {
     fontSize: 18,
   },
+  noItemsFound: {
+    fontSize: 18,
+    textAlign: 'center',
+    paddingVertical: "100%"
+  },
+  headerText: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 17,
+  },
+  footerText: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginTop: 12,
+  },
+  sectionHeaderText: {
+    backgroundColor: "white",
+    fontSize: 24,
+    fontWeight: "bold",
+  }
 });

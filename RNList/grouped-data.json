@@ -1,0 +1,14 @@
+[
+    {
+        "foodType": "Burgers",
+        "data": ["BigMac", "BigTasty", "McCountry", "Royal Chees"]
+    },
+    {
+        "foodType": "Chicken",
+        "data": ["McWrap", "McChicken", "SnackWrap"]
+    },
+    {
+        "foodType": "Drinks",
+        "data": ["Coca Cola", "Sprite", "Jucie", "Ice Tea", "Beer"]
+    }
+]
