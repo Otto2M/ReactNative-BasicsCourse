@@ -31,13 +31,13 @@ export default function App() {
       <View style={styles.switchContainer}>
         <Text style={styles.text}>Tamni način</Text>
         <Switch value={isDarkMode} onValueChange={() => setDarkMode((previousState) => !previousState)}
-        trackColor={{false: "#767577", true: "plum"}}
+        trackColor={{false: "#767577", true: "#722F37"}}
         thumbColor="#f4f3f4"/>
       </View>
 
       <View style={styles.loginFormButton}>
         <Pressable style={styles.loginButton} onPress={() => setIsModalVisible(true)}>
-          <Text style={styles.textLoginButton}>PRIJAVI SE</Text>
+          <Text style={styles.textLoginButton}>PRIJAVA</Text>
         </Pressable>
       </View>
 
