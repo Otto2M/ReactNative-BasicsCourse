@@ -1,4 +1,4 @@
-import { SafeAreaView, StatusBar, View, StyleSheet, FlatList, Text, ActivityIndicator, TextInput, Button } from 'react-native';
+import { SafeAreaView, StatusBar, View, StyleSheet, FlatList, Text, ActivityIndicator, TextInput, Button, Pressable, Modal, KeyboardAvoidingView, Platform } from 'react-native';
 import { useState, useEffect} from "react";
 
 export default function App() {
@@ -10,6 +10,7 @@ export default function App() {
   const [postBody, setPostBody] = useState("");
   const [isPosting, setIsPosting] = useState(false);
   const [error, setError] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const fetchData = async (limit = 10) => {
     try {
@@ -80,11 +81,37 @@ export default function App() {
         </View>
       ): (
       <>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder='Naslov' value={postTitle} onChangeText={setPostTitle}/>
-        <TextInput style={styles.input} placeholder='Opis' value={postBody} onChangeText={setPostBody}/>
-        <Button title={isPosting ? "Dodavanje..." : "Dodaj post"} onPress={addPost} disabled={isPosting}/>
+
+      <View style={styles.addPostFormButton}>
+        <Pressable style={styles.addPostButton} onPress={() => setIsModalVisible(true)}>
+          <Text style={styles.textAddPostButton}>DODAJ NOVU OBJAVU</Text>
+        </Pressable>
       </View>
+
+      <Modal 
+          visible={isModalVisible} 
+          onRequestClose={() => setIsModalVisible(false) & setPostTitle("") & setPostBody("")}
+          animationType="slide"
+          presentationStyle="formSheet"
+        >
+        <KeyboardAvoidingView 
+          behavior="padding" 
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0} 
+          style={styles.generalInputContainer}>
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.input} placeholder='Naslov' value={postTitle} onChangeText={setPostTitle}/>
+            <TextInput style={styles.input} placeholder='Opis' value={postBody} onChangeText={setPostBody}/>
+            <Button title={isPosting ? "Dodavanje..." : "Dodaj post"} onPress={addPost} disabled={isPosting}/>
+          </View>
+
+          <View style={styles.closeContainerBtn}>
+            <Pressable style={styles.closeBtn} onPress={() => setIsModalVisible(false) & setPostTitle("") & setPostBody("")}>
+              <Text style={styles.textCloseBtn}>Zatvori</Text>
+            </Pressable>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+
       <View style={styles.listContainer}>
         <FlatList 
           data= {postList}
@@ -160,8 +187,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 16,
     borderRadius: 8,
-    borderWidth: 1,
+    borderWidth: 2,
+    borderColor: "#722F37",
     margin: 16,
+  },
+  generalInputContainer: {
+    justifyContent: "center",
+    flex: 1,
   },
   input: {
     height: 40,
@@ -184,4 +216,52 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
+  addPostButton: {
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: "#722F37",
+    borderWidth: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    backgroundColor: "white",
+    elevation: 4,
+  },
+  textAddPostButton: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: '#722F37',
+    lineHeight: 21,
+  },
+  addPostFormButton: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    paddingBottom: 30,
+  },
+  closeContainerBtn: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    paddingBottom: 30,
+  },
+  closeBtn: {
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: "#722F37",
+    borderWidth: 2,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    backgroundColor: "white",
+    elevation: 4,
+  },
+  textCloseBtn: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: '#722F37',
+    lineHeight: 21,
+  }
 });
