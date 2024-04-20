@@ -6,30 +6,50 @@ export default function App() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [isDarkMode, setDarkMode] = useState(false);
+  const [isDarkMode, setDarkMode] = useState(false); // Dodano stanje za praćenje moda
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // Odgovarajući stilovi za tamni i svjetli način rada
+  const containerStyle = isDarkMode ? styles.containerDark : styles.containerLight;
+  const textStyle = isDarkMode ? styles.textDark : styles.textLight;
+  const placeholderColor = isDarkMode ? '#888' : '#999';
+  const inputBorderColor = isDarkMode ? '#fff' : '#000';
+
   return (
-    <SafeAreaView style={styles.container}>
-      <TextInput style={styles.input} value={name} onChangeText={setName} placeholder='email@example.com'/>
-      <Text style={styles.text}>Zovem se {name}</Text>
-      <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder='password' secureTextEntry/>
-      <Text style={styles.text}>Lozinka {password}</Text>
+    <SafeAreaView style={[containerStyle, styles.container]}>
       <TextInput 
-        style={styles.input} 
+        style={[styles.input, {borderColor: inputBorderColor}]} 
+        value={name} 
+        onChangeText={setName} 
+        placeholder='email@example.com'
+        placeholderTextColor={placeholderColor}/>
+      <Text style={[styles.text, textStyle]}>Zovem se {name}</Text>
+      <TextInput 
+        style={[styles.input, {borderColor: inputBorderColor}]} 
+        value={password} 
+        onChangeText={setPassword} 
+        placeholder='password' 
+        placeholderTextColor={placeholderColor} 
+        secureTextEntry/>
+      <Text style={[styles.text, textStyle]}>Lozinka {password}</Text>
+      <TextInput 
+        style={[styles.input, {borderColor: inputBorderColor}]} 
         value={number} 
         onChangeText={setNumber} 
         placeholder='numeric keyboard type' 
+        placeholderTextColor={placeholderColor}
         keyboardType='numeric' 
         autoCorrect={false} 
         autoCapitalize='none'/>
-      <Text style={styles.text}>Broj mobitela {number}</Text>
-      <TextInput 
-        style={[styles.input, styles.multilineText]} 
-        placeholder='opis ' 
+      <Text style={[styles.text, textStyle]}>Broj mobitela {number}</Text>
+      <TextInput
+        style={[styles.input, styles.multilineText, {borderColor: inputBorderColor}]} 
+        placeholder='opis '
+        placeholderTextColor={placeholderColor} 
         multiline 
         textAlignVertical='top'/>
       <View style={styles.switchContainer}>
-        <Text style={styles.text}>Tamni način</Text>
+        <Text style={[styles.text, textStyle]}>Tamni način</Text>
         <Switch value={isDarkMode} onValueChange={() => setDarkMode((previousState) => !previousState)}
         trackColor={{false: "#767577", true: "#722F37"}}
         thumbColor="#f4f3f4"/>
@@ -58,8 +78,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingTop: StatusBar.currentHeight,
+  },
+  containerLight: {
+    backgroundColor: '#fff',
+  },
+  containerDark: {
+    backgroundColor: '#333',
   },
   input: {
     height: 40,
@@ -71,6 +96,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 30,
     padding: 10,
+  },
+  textLight: {
+    color: '#000',
+  },
+  textDark: {
+    color: '#fff',
   },
   multilineText: {
     minHeight: 100,
