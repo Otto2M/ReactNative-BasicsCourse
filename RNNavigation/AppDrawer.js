@@ -7,7 +7,7 @@ import SettingsScreen from './screens/SettingsScreen';
 
 const Drawer = createDrawerNavigator();
 
-export default function App() {
+export default function AppDrawer() {
     return (
         <NavigationContainer>
             <Drawer.Navigator>
