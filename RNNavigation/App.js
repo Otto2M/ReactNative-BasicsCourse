@@ -1,42 +1,26 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from './screens/HomeScreen';
-import AboutScreen from './screens/AboutScreen';
-import { Pressable, Text, StyleSheet } from 'react-native';
+// App.js
+import 'react-native-gesture-handler';
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import DashboardScreen from "./screens/DashboardScreen";
+import SettingsScreen from './screens/SettingsScreen';
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home' screenOptions={{
-        headerStyle: {
-          backgroundColor: "#6a51ae"
-        },
-        headerTintColor: "#fff",
-        headerTitleStyle: {fontWeight: "bold"},
-        headerRight: () => (
-          <Pressable onPress={() => alert("Menu button pressed!")}>
-            <Text style={{color: "#fff", fontSize: 16}}>Izbornik</Text>
-          </Pressable>
-        ),
-        contentStyle: {
-          backgroundColor: "#e8e4f3"
-      }
-      }}>
-        <Stack.Screen name='Home' component={HomeScreen} options={{
-          title: "Welcome home",
-          
-        }}/>
-        <Stack.Screen 
-          name='About' 
-          component={AboutScreen} 
-          initialParams={{name: "Guest"}}
-          // options={({route}) => ({
-          //   title: route.params.name
-          // })}
-          />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Drawer.Navigator>
+                <Drawer.Screen name="Dashboard" component={DashboardScreen} 
+                    options={{title: "My Dashboard", 
+                    drawerLabel: "Dashboard label",
+                    drawerActiveTintColor: "#333",
+                    drawerActiveBackgroundColor: "white",
+                    drawerContentStyle: {
+                        backgroundColor: "#c6cbef"
+                    }}}/>
+                <Drawer.Screen name="Settings" component={SettingsScreen} />
+            </Drawer.Navigator>
+        </NavigationContainer>
+    )
 }

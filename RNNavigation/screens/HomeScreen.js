@@ -7,7 +7,9 @@ export default function HomeScreen({navigation, route}) {
     <View style={styles.container}>
       <Text style={styles.text}>Home screen</Text>
       <Text style={styles.text}>{route.params?.result}</Text>
-      <Button title='Go to About' onPress={() => navigation.navigate("About")}></Button>
+      <Button title='Go to About' onPress={() => navigation.navigate("About", {
+        name: "Otto",
+      })}></Button>
     </View>
   );
 }
